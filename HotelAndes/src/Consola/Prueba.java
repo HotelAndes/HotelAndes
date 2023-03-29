@@ -2,8 +2,11 @@ package Consola;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,11 +17,12 @@ import Logica.Habitacion;
 
 
 public class Prueba {
-	static CargardorArchivo probar= new CargardorArchivo();
-	
- 
+	static CargardorArchivo probar= new CargardorArchivo(); 
 
 	public static void main(String[] args) throws IOException {
+		
+		
+		
 		File archivoCamas= new File ("./data/camas.txt");
 		HashMap<String,Cama> camas= probar.cargarCamas ( archivoCamas);
 		for(String i: camas.keySet() ) {
@@ -33,17 +37,7 @@ public class Prueba {
 		System.out.println("Cuartos: \n");
 		for(String i : cuartos.keySet()) 
 		{
-			/*
-			public String id;
-			public int capacidad;
-			public List<Cama> cama;
-			public String ubicacion;
-			public String tipo;
-			public float precioFijo;
-			public boolean vista;
-			public boolean balcon;
-			public boolean cocina;
-			*/
+			
 			Habitacion hab = cuartos.get(i);
             System.out.println("iD: " + i+ "capacidad: "+hab.getCapacidad() + "ubicacion : " + hab.getUbicacion() + "Precio: "+hab.getPrecioFijo()+ "Camas: ");
             ArrayList<Cama> camasHab= hab.getCama();
@@ -51,11 +45,25 @@ public class Prueba {
             	System.out.println(c.tamaño +  ",");
             }
             System.out.println("\n");
+            
+            
+            
         }
 		
+		//Date fecha= probar.formatearFecha("02/07/2022", "dd/MM/yy");
+		//System.out.println(fechaString(fecha));
 	}
-			 
-			 
 	
-
+	
+	public static String fechaString(Date date)
+	{
+		 
+	        
+            SimpleDateFormat dateFormatter=null;
+	             
+	        dateFormatter = new SimpleDateFormat("dd/MM/yy");
+	       
+	        return dateFormatter.format(date);
+	        
+	}
 }

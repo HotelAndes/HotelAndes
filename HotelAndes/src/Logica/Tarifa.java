@@ -1,30 +1,56 @@
 package Logica;
 
+import java.util.Date;
+
 public class Tarifa {
 	
-	public String tipoHabitacion;
-	public float precio; 
-	public String fecha;
-	private float getPrecio() {
+	private String tipoHabitacion;
+	private float precio; 
+	private Date fechaInicial; 
+	private Date fechaFinal;
+	
+	
+	public Tarifa(String tipoHabitacion, float precio, Date fechaInicial, Date fechaFinal) {
+		this.tipoHabitacion = tipoHabitacion;
+		this.precio = precio;
+		this.fechaInicial = fechaInicial;
+		this.fechaFinal = fechaFinal;
+	}
+
+
+	public String getTipoHabitacion() {
+		return tipoHabitacion;
+	}
+
+
+	public float getPrecio() {
 		return precio;
 	}
 
 
-	private String getFecha() {
-		return fecha;
+	public Date getFechaInicial() {
+		return fechaInicial;
 	}
 
 
-	private String getDiaDeSemana() {
-		return diaDeSemana;
+	public Date getFechaFinal() {
+		return fechaFinal;
 	}
-
-
-	public String diaDeSemana;
 	
 	
-	public Tarifa() {
-		// TODO Auto-generated constructor stub
-	}
-
+	
+	
+	
 }
+
+
+	
+
+	
+	
+	
+	
+	
+	
+	
+	

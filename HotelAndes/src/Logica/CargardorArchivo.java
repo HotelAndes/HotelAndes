@@ -5,8 +5,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 
 
 
@@ -14,6 +18,8 @@ public class CargardorArchivo {
 	public HashMap<String,Cama> camas= new HashMap<String,Cama>();
 	public HashMap<String, Habitacion> habitacionies= new  HashMap<String, Habitacion>();
 	public ArrayList <HashMap<String, ArrayList<Habitacion>>> habitacionesPorId= new ArrayList <HashMap<String, ArrayList<Habitacion>>>();
+	public HashMap<Habitacion, Tarifa> tarifas= new  HashMap<Habitacion, Tarifa>();
+	public ArrayList<HasMap<String(dia del año), float (tarifa)>>
 	
 	
 	/*
@@ -108,6 +114,38 @@ public class CargardorArchivo {
 			
 		}
 	
+	public HashMap<String,Cama> cargarTarifas (File archivoTarifas) throws IOException
+	{
+		
+		FileReader archivo= new FileReader(archivoTarifas);
+		BufferedReader br = new BufferedReader(archivo);
+		String linea = br.readLine();
+		String[] titulos = linea.split(";");
+		linea = br.readLine();
+		
+		
+		while (linea != null) // Cuando se llegue al final del archivo, linea tendrá el valor null
+		{
+			//fechaInical;fechaFinal;dia;tipo de habitacion;extra  01-01-23;07-01-23
+			String[] partes = linea.split(";");
+			Date fechaInicial = formatearFecha(partes[0], "dd-MM-yy");
+			Date fechaFinal=formatearFecha(partes[1], "dd-MM-yy");
+			String dia=partes[2];
+			Habitacion tipoHabitación= habitacionies.get(partes[3]);
+			float extra= Integer.parseInt(partes[4]);
+			Tarifa laTarifa= tarifas.get();
+			if (laCama == null)
+			{
+				laCama= new Cama (tamaño,uso, numeroNiños,numeroAdultos);
+				camas.put(tamaño,laCama);
+			}
+			linea = br.readLine(); // Leer la siguiente línea
+		}
+
+		br.close();
+		return camas;
+	}
+	
 	
 	
 	
@@ -124,6 +162,22 @@ public class CargardorArchivo {
 			bool= false;
 				}
 		return bool;
+	}
+	
+	public Date formatearFecha(String date_time, String formato) {
+		 
+	        SimpleDateFormat dateParser = new SimpleDateFormat(formato);
+	        Date date= null ;
+           
+	        {
+	            try {
+	                 date = dateParser.parse(date_time);
+	                
+	            } catch (ParseException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        return date;
 	}
 	
 
