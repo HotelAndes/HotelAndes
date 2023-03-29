@@ -1,0 +1,51 @@
+id;ubicacion;capacidad;camas;precioFijo;vista;balcon;cocina;tipo
+001;primerPiso;2;Sencilla;372527;true;true;true;estandar
+002;primerPiso;2;Doble;786363;true;false;true;estandar
+003;primerPiso;2;Queen;1357958;false;true;false;suiteDoble
+004;primerPiso;2;Sencilla, Ni¤os;1484708;true;true ;true;estandar
+005;primerPiso;2;Sencilla;780442;true;false;true ;estandar
+006;primerPiso;2;Doble;1659091;false;true;false;suite 
+007;primerPiso;2;Queen;1821663;true;true;true;estandar
+008;primerPiso;2;Sencilla, Ni¤os;345096;true;false;true;estandar
+009;primerPiso;3;Doble,Sencilla;1581361;false;true;false;estandar
+010;primerPiso;2;Doble;397095;true;true ;true;suiteDoble
+011;segundoPiso;4;King, Ni¤os;1231991;true;false;true ;estandar
+012;segundoPiso;5;King, Queen;1671508;false;true;false;estandar
+013;segundoPiso;4;Doble, Doble;1435870;true;true;true;suiteDoble
+014;segundoPiso;2;Queen;697463;true;false;true;estandar
+015;segundoPiso;2;Queen;134029;false;true;false;estandar
+016;segundoPiso;1;Sencilla;286464;true;true ;true;estandar
+017;segundoPiso;2;Queen;772333;true;false;true ;estandar
+018;segundoPiso;4;Ni¤os, Ni¤os, Queen;563022;false;true;false;estandar
+019;segundoPiso;4;Doble,Doble;1717661;true;true;true;suiteDoble
+020;tercerPiso;2;Queen;1767677;true;false;true;estandar
+021;tercerPiso;4;King, Sencilla;212435;false;true;false;estandar
+022;tercerPiso;3;Doble, Ni¤os;434379;true;true ;true;estandar
+023;tercerPiso;1;Sencilla;1213313;true;false;true ;suite 
+024;tercerPiso;5;King, Sencilla, Queen;942681;false;true;false;estandar
+025;tercerPiso;5;King, Sencilla, Queen;547215;true;true;true;estandar
+026;tercerPiso;3;Doble,Sencilla;1348058;true;false;true;suiteDoble
+027;tercerPiso;2;QUeen;110944;false;true;false;estandar
+028;tercerPiso;3;King;1815611;true;true ;true;estandar
+029;tercerPiso;5;King, Sencilla, Queen;1607113;true;false;true ;estandar
+030;cuartoPiso;4;King, Sencilla;729014;false;true;false;estandar
+031;cuartoPiso;2;Queen;363047;true;true;true;suite 
+032;cuartoPiso;4;King, Sencilla;1318009;true;false;true;estandar
+033;cuartoPiso;2;Queen;1287423;false;true;false;suiteDoble
+034;cuartoPiso;3;King;1884184;true;true ;true;suite 
+035;cuartoPiso;2;Queen;877810;true;false;true ;estandar
+036;cuartoPiso;4;King, Sencilla;975362;false;true;false;suiteDoble
+037;cuartoPiso;2;Queen;1873160;true;true;true;estandar
+038;cuartoPiso;3;King;1638556;true;false;true;estandar
+039;cuartoPiso;4;King, Sencilla;1925392;false;true;false;suite 
+040;quintoPiso;4;King, Sencilla;644846;true;true ;true;estandar
+041;quintoPiso;5;King, Sencilla, Queen;174506;true;false;true ;estandar
+042;quintoPiso;2;Queen;1142734;false;true;false;estandar
+043;quintoPiso;2;Queen;326845;true;true;true;suite 
+044;quintoPiso;3;King;1580153;true;false;true;suite 
+045;quintoPiso;5;King, Sencilla, Queen;379650;false;true;false;suite 
+046;terraza;2;Queen;1795231;true;true;true;suiteDoble
+047;terraza;2;Queen;2000000;true;true;true;suite 
+048;terraza;4;King, Sencilla;2000000;true;true;true;suite 
+049;terraza;5;King, Sencilla, Queen;2000000;true;true;true;suiteDoble
+050;terraza;3;Doble,Sencilla;2000000;true;true;true;suite 
