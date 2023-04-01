@@ -5,9 +5,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
@@ -18,8 +20,13 @@ public class CargardorArchivo {
 	public HashMap<String,Cama> camas= new HashMap<String,Cama>();
 	public HashMap<String, Habitacion> habitacionies= new  HashMap<String, Habitacion>();
 	public ArrayList <HashMap<String, ArrayList<Habitacion>>> habitacionesPorId= new ArrayList <HashMap<String, ArrayList<Habitacion>>>();
-	public HashMap<Habitacion, Tarifa> tarifas= new  HashMap<Habitacion, Tarifa>();
-	public ArrayList<HasMap<String(dia del año), float (tarifa)>>
+	public HashMap<Date, ArrayList<Tarifa>> tarifas= new  HashMap<Date, ArrayList<Tarifa>>();
+	public HashMap<Date, String> diasAño= new HashMap<Date, String>();
+	public HashMap<Date, Float> tarifaEstandar= new HashMap<Date, Float>();
+	public HashMap<Date, Float> tarifaSuite= new HashMap<Date, Float>();
+	public HashMap<Date, Float> tarifaSuiteDoble= new HashMap<Date, Float>();
+	
+	
 	
 	
 	/*
@@ -31,6 +38,39 @@ public class CargardorArchivo {
  */
 	
 	
+	
+	public HashMap<Date, String> cargarDiasAño () throws IOException
+	{
+		File archivodiasAño= new File ("./data/diasAño.txt");
+		FileReader archivo= new FileReader(archivodiasAño);
+		BufferedReader br = new BufferedReader(archivo);
+		String linea = br.readLine();
+	
+		while (linea != null) // Cuando se llegue al final del archivo, linea tendrá el valor null
+		{
+			//fechaInical;fechaFinal;dia;tipo de habitacion;extra  01-01-23;07-01-23
+			String[] partes = linea.split(";");
+			Date fecha = formatearFecha(partes[0], "dd/MM/yy");
+			String  dia=partes[1];
+			
+			diasAño.put(fecha, dia);
+			
+			linea = br.readLine(); // Leer la siguiente línea
+		}
+
+		br.close();
+		
+		return diasAño;
+	}
+	
+	
+	
+	public HashMap<String, Habitacion> getHabitacionies() {
+		return habitacionies;
+	}
+
+
+
 	public HashMap<String,Cama> cargarCamas (File archivoCamas) throws IOException
 	{
 		
@@ -114,9 +154,10 @@ public class CargardorArchivo {
 			
 		}
 	
-	public HashMap<String,Cama> cargarTarifas (File archivoTarifas) throws IOException
+	public ArrayList<Object> cargarTarifas () throws IOException
 	{
-		
+		diasAño=cargarDiasAño();
+		File archivoTarifas= new File ("./data/tarifas.txt");
 		FileReader archivo= new FileReader(archivoTarifas);
 		BufferedReader br = new BufferedReader(archivo);
 		String linea = br.readLine();
@@ -126,25 +167,72 @@ public class CargardorArchivo {
 		
 		while (linea != null) // Cuando se llegue al final del archivo, linea tendrá el valor null
 		{
-			//fechaInical;fechaFinal;dia;tipo de habitacion;extra  01-01-23;07-01-23
+			
+			//HashMap<String, HashMap<Date,>>
+			//fechaInicial;dia;tipo de habitacion;extra
 			String[] partes = linea.split(";");
-			Date fechaInicial = formatearFecha(partes[0], "dd-MM-yy");
-			Date fechaFinal=formatearFecha(partes[1], "dd-MM-yy");
-			String dia=partes[2];
-			Habitacion tipoHabitación= habitacionies.get(partes[3]);
-			float extra= Integer.parseInt(partes[4]);
-			Tarifa laTarifa= tarifas.get();
-			if (laCama == null)
+			Date fecha = formatearFecha(partes[0], "dd/MM/yy");
+			String[] dias = partes[1].split(",");
+			String tipoHabitación= partes[2];
+			float extra= Integer.parseInt(partes[3]);
+			String diasemanaTarifa= diasAño.get(fecha);
+			
+				if(tipoHabitación.equals("estandar"))
+				{
+					
+					if(Arrays.asList(dias).contains(diasemanaTarifa)) {
+						tarifaEstandar.put(fecha, extra);}
+					else {tarifaEstandar.put(fecha, 0f);}
+					
+					
+				}
+				else if (tipoHabitación.equals("suite"))
+				{
+					
+					if(Arrays.asList(dias).contains(diasemanaTarifa)) {
+							tarifaSuite.put(fecha, extra);}
+					else{tarifaSuite.put(fecha, 0f);}
+					
+				}
+				else if (tipoHabitación.equals("suite doble"))
+				{
+					
+					if(Arrays.asList(dias).contains(diasemanaTarifa)) {
+							tarifaSuiteDoble.put(fecha, extra);}
+					else{tarifaSuiteDoble.put(fecha, 0f);}
+					
+				}
+			
+			Tarifa laTarifa= new Tarifa (tipoHabitación,extra,fecha,dias);
+		
+			if ((tarifas.keySet()).contains(fecha))
 			{
-				laCama= new Cama (tamaño,uso, numeroNiños,numeroAdultos);
-				camas.put(tamaño,laCama);
+				ArrayList<Tarifa> listaTarifas = tarifas.get(fecha);
+				listaTarifas.add(laTarifa);
+				
+			}
+			else {
+				ArrayList<Tarifa> listaTarifas= new ArrayList<Tarifa>();
+				listaTarifas.add(laTarifa);
+				tarifas.put(fecha, listaTarifas);
 			}
 			linea = br.readLine(); // Leer la siguiente línea
 		}
 
 		br.close();
-		return camas;
+		
+		ArrayList<Object> listaFinal = new ArrayList<Object>();
+		//0 estandar, 1 suite, 2 doble, 3 tarifapor fecha
+		listaFinal.add(tarifaEstandar);
+		listaFinal.add(tarifaSuite);
+		listaFinal.add(tarifaSuiteDoble);
+		listaFinal.add(tarifas);
+		
+		
+		return listaFinal;
 	}
+	
+	
 	
 	
 	
@@ -179,6 +267,21 @@ public class CargardorArchivo {
 	        }
 	        return date;
 	}
+	public Date formatearHora(String date_time, String formato) {
+		 
+        SimpleDateFormat dateParser = new SimpleDateFormat(formato);
+        Date date= null ;
+       
+        {
+            try {
+                 date = dateParser.parse(date_time);
+                
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return date;
+}
 	
 
 }

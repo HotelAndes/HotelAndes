@@ -13,6 +13,7 @@ import java.util.List;
 import Logica.Cama;
 import Logica.CargardorArchivo;
 import Logica.Habitacion;
+import Logica.Tarifa;
 
 
 
@@ -22,7 +23,7 @@ public class Prueba {
 	public static void main(String[] args) throws IOException {
 		
 		
-		
+		/*
 		File archivoCamas= new File ("./data/camas.txt");
 		HashMap<String,Cama> camas= probar.cargarCamas ( archivoCamas);
 		for(String i: camas.keySet() ) {
@@ -46,12 +47,33 @@ public class Prueba {
             }
             System.out.println("\n");
             
-            
-            
-        }
+        
+ 		
+ 		}
+ 		
+		System.out.println("TARIFAS");
+        File archivoTarifa= new File ("./data/tarifas.txt");
+        ArrayList<Object> tarifas= probar.cargarTarifas();
+    	//0 estandar, 1 suite, 2 doble, 3 tarifapor fecha
+        
+        HashMap<Date, String> diasAño= probar.cargarDiasAño();
+       
+         
+         Object principal= tarifas.get(0);
+         Object tarifaEstandar= tarifas.get(1);
+         Object tarifaSuite= tarifas.get(2);
+         Object tarifaSuiteDoble= tarifas.get(3);
+         //System.out.println(tarifaEstandar);
+         for(Date j : ((HashMap<Date, Float>) tarifaEstandar).keySet()) 
+ 		{
+ 			String fecha=fechaString(j);
+ 			System.out.println(fecha + ": "+ (((HashMap<String, Cama>) tarifaEstandar).get(j))); 
+ 		}
+         
 		
-		//Date fecha= probar.formatearFecha("02/07/2022", "dd/MM/yy");
-		//System.out.println(fechaString(fecha));
+		*/
+		//Date hora= probar.formatearHora("12:04", "HH:mm");
+		//System.out.println(horaString(hora));
 	}
 	
 	
@@ -61,7 +83,18 @@ public class Prueba {
 	        
             SimpleDateFormat dateFormatter=null;
 	             
-	        dateFormatter = new SimpleDateFormat("dd/MM/yy");
+	        dateFormatter = new SimpleDateFormat("dd/MM");
+	       
+	        return dateFormatter.format(date);
+	        
+	}
+	public static String horaString(Date date)
+	{
+		 
+	        
+            SimpleDateFormat dateFormatter=null;
+	             
+	        dateFormatter = new SimpleDateFormat("HH:mm");
 	       
 	        return dateFormatter.format(date);
 	        
