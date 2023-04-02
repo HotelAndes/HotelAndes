@@ -32,10 +32,7 @@ public class FuncionesEmpleado {
 	     
 	     for( Date fecha: fechasEntreEntradaYSalida) 
 	     {
-	    	 if(inventario.get(fecha)==false)
-	    	 {
-	    		 Sepuede=false;
-	    	 }
+	    	
 	     }
 	     if (Sepuede==false) {
 	    	 return "No es posible realizar la reserva";
@@ -45,7 +42,7 @@ public class FuncionesEmpleado {
 	     }
 		
 		
-		
+		return "a";
 	}
 	
 	public static String fechaString(Date date)
