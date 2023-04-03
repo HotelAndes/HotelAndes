@@ -7,7 +7,9 @@ public class HuespedReserva {
 	private int documento;
 	private String correo;
 	private String celular;
+	private Reserva reserva;
 	FuncionesEmpleado empleado= new FuncionesEmpleado();
+	
 	public String getNombre() {
 		return nombre;
 	}

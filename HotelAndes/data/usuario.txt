@@ -1,0 +1,4 @@
+empleado1;1234;empleado
+unicoadminsupremo;SoyElAdminSupremo1*;administrador
+empleado2;1234567;empleado
+gaviotica911;hola;usuario;

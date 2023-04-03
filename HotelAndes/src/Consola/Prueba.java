@@ -23,7 +23,6 @@ public class Prueba {
 	public static void main(String[] args) throws IOException {
 		
 		
-		/*
 		File archivoCamas= new File ("./data/camas.txt");
 		HashMap<String,Cama> camas= probar.cargarCamas ( archivoCamas);
 		for(String i: camas.keySet() ) {
@@ -71,7 +70,6 @@ public class Prueba {
  		}
          
 		
-		*/
 		//Date hora= probar.formatearHora("12:04", "HH:mm");
 		//System.out.println(horaString(hora));
 	}

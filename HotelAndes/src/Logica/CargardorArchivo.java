@@ -19,12 +19,17 @@ import java.time.format.DateTimeFormatter;
 public class CargardorArchivo {
 	public HashMap<String,Cama> camas= new HashMap<String,Cama>();
 	public HashMap<String, Habitacion> habitacionies= new  HashMap<String, Habitacion>();
-	public ArrayList <HashMap<String, ArrayList<Habitacion>>> habitacionesPorId= new ArrayList <HashMap<String, ArrayList<Habitacion>>>();
+	public HashMap<String, ArrayList<Habitacion>> habitacionesPorTipo= new HashMap <String, ArrayList<Habitacion>>();
 	public HashMap<Date, ArrayList<Tarifa>> tarifas= new  HashMap<Date, ArrayList<Tarifa>>();
 	public HashMap<Date, String> diasAño= new HashMap<Date, String>();
 	public HashMap<Date, Float> tarifaEstandar= new HashMap<Date, Float>();
 	public HashMap<Date, Float> tarifaSuite= new HashMap<Date, Float>();
 	public HashMap<Date, Float> tarifaSuiteDoble= new HashMap<Date, Float>();
+	public HashMap<String, Plato> platos= new  HashMap<String, Plato>();
+	public ArrayList <HashMap<String, ArrayList<Plato>>> PlatoporNom= new ArrayList <HashMap<String, ArrayList<Plato>>>();
+	public HashMap<String, Bebida> bebidas= new  HashMap<String, Bebida>();
+	public ArrayList <HashMap<String, ArrayList<Bebida>>> BebidaporNom= new ArrayList <HashMap<String, ArrayList<Bebida>>>();
+	
 	
 	
 	
@@ -38,6 +43,90 @@ public class CargardorArchivo {
  */
 	
 	
+	
+	
+	
+	public HashMap<String, Bebida> cargarBebida (File archivoBebidas) throws IOException
+	{
+		
+		FileReader archivo= new FileReader(archivoBebidas);
+		BufferedReader br = new BufferedReader(archivo);
+		String linea = br.readLine();
+		String[] titulos = linea.split(";");
+		linea = br.readLine();
+		
+		
+		while (linea != null) // Cuando se llegue al final del archivo, linea tendrá el valor null
+		{
+			//producto, precio, tiempo, Shabitacion
+			
+			
+			String[] partes = linea.split(";");
+			
+			String producto = partes[0];
+			float precio = Float.parseFloat(partes[1]);
+			String tiempo = partes[2];
+			boolean llevable = toBool(partes[7]);
+
+			Bebida laBebida = bebidas.get(producto);
+			if (laBebida == null)
+			{
+				laBebida= new Bebida( producto, precio, tiempo,llevable);
+				bebidas.put(producto,laBebida);
+				//ArrayList <HashMap<String, ArrayList<Bebida>>> Mirar si organizar eso por esta estructura
+				
+
+			}
+			linea = br.readLine(); // Leer la siguiente línea
+		}
+
+		br.close();
+		return bebidas;
+			
+		}
+	
+	
+	
+	
+	
+	public HashMap<String, Plato> cargarPlato (File archivoPlatos) throws IOException
+	{
+		
+		FileReader archivo= new FileReader(archivoPlatos);
+		BufferedReader br = new BufferedReader(archivo);
+		String linea = br.readLine();
+		String[] titulos = linea.split(";");
+		linea = br.readLine();
+		
+		
+		while (linea != null) // Cuando se llegue al final del archivo, linea tendrá el valor null
+		{
+			//producto, precio, tiempo, Shabitacion
+			
+			
+			String[] partes = linea.split(";");
+			
+			String producto = partes[0];
+			float precio = Float.parseFloat(partes[1]);
+			String tiempo = partes[2];
+			boolean Shabitacion = toBool(partes[7]);
+
+			Plato elPlato = platos.get(producto);
+			if (elPlato == null)
+			{
+				elPlato= new Plato( producto, precio, tiempo, llevable);
+				platos.put(producto, elPlato);
+				//ArrayList <HashMap<String, ArrayList<Plato>>> Mirar si organizar eso por esta estructura
+				
+
+			}
+			linea = br.readLine(); // Leer la siguiente línea
+		}
+
+		br.close();
+		return platos;
+			
+		}
 	
 	public HashMap<Date, String> cargarDiasAño () throws IOException
 	{
@@ -103,6 +192,9 @@ public class CargardorArchivo {
 	}
 	public HashMap<String, Habitacion> cargarHabitacion (File archivoHabitaciones) throws IOException
 	{
+		ArrayList<Habitacion> estandar= new ArrayList<Habitacion>();
+		ArrayList<Habitacion> suite= new ArrayList<Habitacion>();
+		ArrayList<Habitacion> suiteDoble= new ArrayList<Habitacion>();
 		
 		FileReader archivo= new FileReader(archivoHabitaciones);
 		BufferedReader br = new BufferedReader(archivo);
@@ -142,17 +234,30 @@ public class CargardorArchivo {
 			{
 				laHabitacion= new Habitacion( id,  capacidad, camasCuarto,  ubicacion,  tipo,  precioFijo, vista,  balcon,  cocina);
 				habitacionies.put(id, laHabitacion);
+	
+				if(tipo=="estandar") {estandar.add(laHabitacion);}
+				if(tipo=="suite") {suite.add(laHabitacion);}
+				if(tipo=="suiteDoble") {suiteDoble.add(laHabitacion);}
+				
 				//ArrayList <HashMap<String, ArrayList<Habitacion>>> Mirar si organizar eso por esta estructura
 				
 
 			}
 			linea = br.readLine(); // Leer la siguiente línea
 		}
+		habitacionesPorTipo.put("estandar", estandar);
+		habitacionesPorTipo.put("suite", suite);
+		habitacionesPorTipo.put("suiteDoble", suiteDoble);
+		
 
 		br.close();
 		return habitacionies;
 			
 		}
+	
+	public HashMap<String, ArrayList<Habitacion>>getHabitacionesID(){
+		return habitacionesPorTipo;
+	}
 	
 	public ArrayList<Object> cargarTarifas () throws IOException
 	{

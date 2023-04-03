@@ -1,5 +1,5 @@
 package Consola;
-
+import Logica.CargardorArchivo;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,11 +11,14 @@ import java.util.HashMap;
 
 import Logica.Reserva;
 import Logica.FuncionesEmpleado;
+import Logica.Habitacion;
 import Logica.HuespedReserva;
 
 
 public class AplicacionCliente {
 	 public HashMap<String, HuespedReserva> huespedes = new  HashMap<String, HuespedReserva>();
+	 public CargardorArchivo catalogo= new CargardorArchivo ();
+	 
 	 
 	// public HashMap<HuespedReserva, Reserva> reservas = new  HashMap<HuespedReserva, Reserva>();
 	
@@ -97,7 +100,9 @@ public class AplicacionCliente {
 	}
 	public void reservar()
 	{
+	
 	  String nombre=input("Ingrese su nombre completo: "); 
+	  HashMap<String, ArrayList<Habitacion>> habitacionies= catalogo.getHabitacionesID();
 	  int cantidadDeAcompañantes= Integer.parseInt(input("Ingrese la cantidad de personas que van al viaje (incluyendolo a usted)"));
 	  Date Fecha_llegada= formatearHora(input("Ingrese la fecha de llegada en el formato dd/MM: "), "dd/MM");
 	  Date Fecha_salida= formatearHora(input("Ingrese la fecha de Salida en el formato dd/MM: "), "dd/MM");
@@ -109,15 +114,18 @@ public class AplicacionCliente {
 		}
 		else {
 			FuncionesEmpleado empleado= new FuncionesEmpleado();
-			empleado.reserva(huesped1, Fecha_llegada,  Fecha_salida, cantidadDeAcompañantes);
+			empleado.reserva(huesped1, Fecha_llegada,  Fecha_salida, cantidadDeAcompañantes, habitacionies);
+			
+			
 			
 		}
 		
-		
+	
 			
 	  
 	
 	}
+
 	// TODO EL RESTO DEL MENUUUU!!!!!!!!!!!!!!!
 	
 	
