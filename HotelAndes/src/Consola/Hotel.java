@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -23,7 +24,8 @@ public class Hotel {
 	AplicacionCliente clientes =new  AplicacionCliente();
 	MenuAdmin admins= new MenuAdmin();
 	
-	public void cargarUsuarios() throws IOException
+	
+	public HashMap<String, String>  cargarUsuarios() throws IOException
 	{
 		File archivoUsers= new File ("./data/usuarios.txt");
 		FileReader archivo= new FileReader(archivoUsers);
@@ -33,7 +35,7 @@ public class Hotel {
 		while (linea != null) // Cuando se llegue al final del archivo, linea tendrá el valor null
 		{
 			//fechaInical;fechaFinal;dia;tipo de habitacion;extra  01-01-23;07-01-23
-			System.out.println(linea);
+			
 			String[] partes = linea.split(";");
 			
 			String elUser = partes[0];
@@ -43,26 +45,31 @@ public class Hotel {
 			if (User == null)
 			{
 				usuariosYPass.put(elUser,elPassw);
-				tipoDePersona.put(User, persona);
+				tipoDePersona.put(elUser, persona);
+				
 			}
 			linea = br.readLine(); // Leer la siguiente línea
 		}
 
 		br.close();
+		return usuariosYPass ;
 		}
 	
 	public String iniciarSesion(String user, String password) throws IOException {
-		System.out.println(usuariosYPass);
+		
+		HashMap<String, String> usuariosYPass= cargarUsuarios();
+		ArrayList<String> usuarios= new ArrayList<String>(usuariosYPass.keySet());
+	
 		String retorno="";
 		Boolean cond1=usuarios.contains(user);
 		String contraseña=usuariosYPass.get(user);
-		Boolean cond2= contraseña.equals(password);
+		Boolean cond2= password.equals(contraseña);
 		String persona=tipoDePersona.get(user);
 		if(cond1 & cond2) {
 			retorno="Inició sesión con exito";
 			if(persona=="empleado") {retorno="dhdd";}//TODO
-			if(persona=="admin") {clientes.ejecutarAplicacion();}
-			if(persona=="usuario") {admins.ejecutarAplicacion();}
+			if(persona=="admin") {admins.ejecutarAplicacion();}
+			if(persona=="usuario") {clientes.ejecutarAplicacion();}
 			
 		}
 		else {retorno="Usuario o contraseña incorrecta";}
@@ -78,22 +85,17 @@ public class Hotel {
 		if(cond) {retorno="El usuario ya existe";}
 		else {
 		File archivo= new File ("./data/usuarios.txt");
-		PrintWriter pw = null;
+		
 		try {
-			pw= new PrintWriter(archivo);
-			//escribir
-			pw.println(user +";");
-			pw.println(password+";");
-			pw.println("usuario");
-		}catch(FileNotFoundException ex ) {
-			ex.printStackTrace();
-			
-		}finally {
-			if(pw !=null) {
-				pw.close();
-			}
-		
-		
+			FileWriter escritor = new FileWriter(archivo, true);
+			escritor.write(user +";");
+            escritor.write(password+";");
+            escritor.write("usuario"+";\n");
+			escritor.close();
+            System.out.println("Se escribió en el archivo correctamente.");
+        } catch (IOException e) {
+            System.out.println("Hubo un error al escribir en el archivo.");
+            e.printStackTrace();
 	}
 		}
 		return retorno;
